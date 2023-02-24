@@ -22,6 +22,15 @@ app.post('/students', function(req, res) {
 
   var str = JSON.stringify(obj, null, 2);
 
+  
+  /*
+  create the students directory needs to exist to create
+  it manually for now 
+
+  */
+
+
+
   fs.writeFile("students/" + record_id + ".json", str, function(err) {
     var rsp_obj = {};
     if(err) {
@@ -37,6 +46,7 @@ app.post('/students', function(req, res) {
   
 }); //end post method
 
+//looks up one student by record id
 app.get('/students/:record_id', function(req, res) {
   var record_id = req.params.record_id;
 
@@ -72,19 +82,40 @@ function readFiles(files,arr,res) {
   });  
 }
 
+//get all students
 app.get('/students', function(req, res) {
   var obj = {};
   var arr = [];
   filesread = 0;
 
+  //studentList = []
+/*function checkStudentExists(fname, lname) */
   glob("students/*.json", null, function (err, files) {
     if (err) {
       return res.status(500).send({"message":"error - internal server error"});
     }
+    //console.log("list of files to read")
+    //console.log(files)
+    //readFiles(files, studentList, res)
     readFiles(files,[],res);
+    
+
+    //console.log('fname=&{fname}, lname=&{lname})
+    //search res to see if lname, fname is in there
+
+    //if student is duplicate
+    //return true
+
+    //else
+    //return true
   });
 
 });
+
+/*if (checkStudentExists(fname,lname){
+  str = 'student ${fname} ${lname} already exists';
+  console.
+}*/
 
 app.put('/students/:record_id', function(req, res) {
   var record_id = req.params.record_id;
@@ -127,6 +158,10 @@ app.put('/students/:record_id', function(req, res) {
   });
 
 }); //end put method
+/* app.get('/search', function(req, res)){
+  var last_name = req.query.last_name
+  var first_name = req.query.first_name
+} */
 
 app.delete('/students/:record_id', function(req, res) {
   var record_id = req.params.record_id;
