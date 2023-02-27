@@ -1,5 +1,8 @@
 //studentserver.js
 
+
+
+
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser');
@@ -19,8 +22,15 @@ app.use(express.static('./public'));
 * @param {boolean} enrolled - enrolled status of student
 * @returns {object} - record_id and message
 */
-
-
+/**
+ * @function POST_METHOD
+ * 
+ * @param {string} /students - path to post to
+ * @param {function} function - callback function
+ * @returns {object} - record_id and message
+ * @description - creates a new student
+ *  \
+ */
 app.post('/students', function(req, res) {
   var record_id = new Date().getTime();
 
@@ -62,6 +72,14 @@ app.post('/students', function(req, res) {
 /**
  * @constructor getStudent
  * @param {string} record_id - record id of student
+ * @returns {object} - student object
+ * @description - looks up a student by record id
+ * 
+ */
+/**
+ * @function GET_METHOD
+ * @param {string} /students/:record_id - path to get from
+ * @param {function} function - callback function
  * @returns {object} - student object
  * @description - looks up a student by record id
  * 
@@ -118,6 +136,14 @@ function readFiles(files,arr,res) {
  * @description - looks up all students
  * 
  */
+/**
+ * @function GET_METHOD
+ * @param {string} /students - path to get from
+ * @param {function} function - callback function
+ * @returns {object} - list of students
+ * @description - looks up all students
+ * 
+ */
 app.get('/students', function(req, res) {
   var obj = {};
   var arr = [];
@@ -148,6 +174,15 @@ app.get('/students', function(req, res) {
 /**
  * @constructor updateStudent
  * @param {string} record_id - record id of student
+ * @returns {object} - record_id and message
+ * @description - updates a student by record id
+ * 
+ */
+
+/**
+ * @function PUT_METHOD
+ * @param {string} /students/:record_id - path to put to
+ * @param {function} function - callback function
  * @returns {object} - record_id and message
  * @description - updates a student by record id
  * 
@@ -215,6 +250,14 @@ app.put('/students/:record_id', function(req, res) {
 /**
  * @constructor deleteStudent
  * @param {string} record_id - record id of student
+ * @returns {object} - record_id and message
+ * @description - deletes a student by record id
+ * 
+ */
+/**
+ * @function DELETE_METHOD
+ * @param {string} /students/:record_id - path to delete from
+ * @param {function} function - callback function
  * @returns {object} - record_id and message
  * @description - deletes a student by record id
  * 
