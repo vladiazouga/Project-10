@@ -1,5 +1,10 @@
 //studentserver.js
-
+/**
+ * @file studentserver.js
+ * @description - this file contains the code for the student server
+ * @author - Vladia
+ * 
+ */
 
 
 
