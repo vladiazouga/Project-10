@@ -6,9 +6,20 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const glob = require("glob")
 
+ 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static('./public'));
+
+/** 
+ * @constructor Student
+* @param {string} first_name - first name of student
+* @param {string} last_name - last name of student
+* @param {number} gpa - gpa of student
+* @param {boolean} enrolled - enrolled status of student
+* @returns {object} - record_id and message
+*/
+
 
 app.post('/students', function(req, res) {
   var record_id = new Date().getTime();
@@ -22,14 +33,15 @@ app.post('/students', function(req, res) {
 
   var str = JSON.stringify(obj, null, 2);
 
-  
-  /*
-  create the students directory needs to exist to create
-  it manually for now 
-
-  */
-
-
+/**
+ * @function writeFile
+ * @param {string} fname - name of file to write
+ * @param {string} str - string to write to file
+ * @param {function} callback - callback function
+ * @returns {object} - record_id and message
+ * @description - writes a string to a file
+ * 
+ */
 
   fs.writeFile("students/" + record_id + ".json", str, function(err) {
     var rsp_obj = {};
@@ -47,6 +59,13 @@ app.post('/students', function(req, res) {
 }); //end post method
 
 //looks up one student by record id
+/**
+ * @constructor getStudent
+ * @param {string} record_id - record id of student
+ * @returns {object} - student object
+ * @description - looks up a student by record id
+ * 
+ */
 app.get('/students/:record_id', function(req, res) {
   var record_id = req.params.record_id;
 
@@ -61,6 +80,16 @@ app.get('/students/:record_id', function(req, res) {
     }
   });
 }); 
+
+/**
+ * @function readFiles
+ * @param {array} files - array of files to read
+ * @param {array} arr - array to store data
+ * @param {object} res - response object
+ * @returns {object} - list of students
+ * @description - reads files and returns a list of students
+ * 
+ */
 
 function readFiles(files,arr,res) {
   fname = files.pop();
@@ -83,39 +112,46 @@ function readFiles(files,arr,res) {
 }
 
 //get all students
+/**
+ * @constructor getStudents
+ * @returns {object} - list of students
+ * @description - looks up all students
+ * 
+ */
 app.get('/students', function(req, res) {
   var obj = {};
   var arr = [];
   filesread = 0;
+  /**
+   * 
+   * @function glob
+   * @param {string} pattern - pattern to match
+   * @param {object} options - options object
+   * @param {function} callback - callback function
+   * @returns {object} - list of students
+   * @description - looks up all students
+   * 
+   */
 
-  //studentList = []
-/*function checkStudentExists(fname, lname) */
   glob("students/*.json", null, function (err, files) {
     if (err) {
       return res.status(500).send({"message":"error - internal server error"});
     }
-    //console.log("list of files to read")
-    //console.log(files)
-    //readFiles(files, studentList, res)
+
     readFiles(files,[],res);
-    
-
-    //console.log('fname=&{fname}, lname=&{lname})
-    //search res to see if lname, fname is in there
-
-    //if student is duplicate
-    //return true
-
-    //else
-    //return true
+  
   });
 
 });
 
-/*if (checkStudentExists(fname,lname){
-  str = 'student ${fname} ${lname} already exists';
-  console.
-}*/
+
+/**
+ * @constructor updateStudent
+ * @param {string} record_id - record id of student
+ * @returns {object} - record_id and message
+ * @description - updates a student by record id
+ * 
+ */
 
 app.put('/students/:record_id', function(req, res) {
   var record_id = req.params.record_id;
@@ -132,10 +168,27 @@ app.put('/students/:record_id', function(req, res) {
   var str = JSON.stringify(obj, null, 2);
 
   //check if file exists
+  /**
+   * @function stat
+   * @param {string} fname - name of file to check
+   * @param {function} callback - callback function
+   * @returns {object} - record_id and message
+   * @description - checks if a file exists
+   * 
+   */
   fs.stat(fname, function(err) {
     if(err == null) {
 
       //file exists
+      /**
+       * @function writeFile
+       * @param {string} fname - name of file to write
+       * @param {string} str - string to write to file
+       * @param {function} callback - callback function
+       * @returns {object} - record_id and message
+       * @description - writes a string to a file
+       * 
+       */
       fs.writeFile("students/" + record_id + ".json", str, function(err) {
         var rsp_obj = {};
         if(err) {
@@ -158,15 +211,25 @@ app.put('/students/:record_id', function(req, res) {
   });
 
 }); //end put method
-/* app.get('/search', function(req, res)){
-  var last_name = req.query.last_name
-  var first_name = req.query.first_name
-} */
 
+/**
+ * @constructor deleteStudent
+ * @param {string} record_id - record id of student
+ * @returns {object} - record_id and message
+ * @description - deletes a student by record id
+ * 
+ */
 app.delete('/students/:record_id', function(req, res) {
   var record_id = req.params.record_id;
   var fname = "students/" + record_id + ".json";
-
+/**
+ * @function unlink
+ * @param {string} fname - name of file to delete
+ * @param {function} callback - callback function
+ * @returns {object} - record_id and message
+ * @description - deletes a file
+ * 
+ */
   fs.unlink(fname, function(err) {
     var rsp_obj = {};
     if (err) {
@@ -181,6 +244,7 @@ app.delete('/students/:record_id', function(req, res) {
   });
 
 }); //end delete method
+
 
 app.listen(5678); //start the server
 console.log('Server is running...');
