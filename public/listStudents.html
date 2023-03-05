@@ -15,33 +15,34 @@
       }
       th,
       td {
-        padding: 8px;
+        padding: 10px;
         text-align: left;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #236eb9;
       }
       th {
-        background-color: #4caf50;
-        color: white;
+        background-color: #d42bc3;
+        color: rgb(189, 178, 27);
       }
+      tr:nth-child(even) {background-color: #f2f2f2;}
     </style>
   </head>
   <body>
     <nav class="navbar navbar-default">
       <div class="container-fluid">
-        <div class="navbar-header"></div>
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Student Management System</a>
+        </div>
         <ol class="nav navbar-nav">
           <li><a href="./addStudent.html">Add Student</a></li>
           <li><a href="./deleteStudent.html">Delete Student</a></li>
-          <li><a href="./displayStudent.html">Show Specific Student</a></li>
-          <li><a href="./updateStudent.html">Update Specific Student</a></li>
-          <li><a href="./listStudents.html">Show All Students</a></li>
-          <li><a href="./index.html">HOME PAGE</a></li>
+          <li><a href="./displayStudent.html">Display Student By ID</a></li>
+          <li><a href="./updateStudent.html">Update Student Record</a></li>
+          <li><a href="./listStudents.html">Get All Student Records</a></li>
         </ol>
       </div>
     </nav>
-
     <div class="container">
-      <a href="javascript:window.history.back();">Back</a><br />
+      <a href="index.html">Index</a> <br />
 
       <!-- <button onclick="sendGetAllVote()">Get All Student</button> -->
       <br />
@@ -54,10 +55,9 @@
             <th>Last Name</th>
             <th>ID</th>
             <th>GPA</th>
-            <th>Enrolled</th>
+            <th>Enrollment</th>
           </tr>
         </thead>
-        <tbody></tbody>
       </table>
     </div>
 
@@ -96,7 +96,7 @@
               enrolledCell.textContent = temp[i].enrolled;
             }
 
-            //   console.log(temp[0].record_id)
+            
             console.log(response.students);
             $("#mydiv").text(obj);
             console.log(response.students);
