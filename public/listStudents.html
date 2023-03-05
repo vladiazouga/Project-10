@@ -6,9 +6,7 @@
 </head>
 <body>
 
-  <label for="vote"> Get all Students</label>
-
-  <button onclick="sendGetAllVote()">Submit</button>
+  <button onclick="sendGetAllVote()">Get all Students</button>
   <br>
 </br>
 
@@ -16,13 +14,14 @@
   <script>
 
     function sendGetAllVote() {
-        var id_val = $("#record_id").val();
-        var temp = "http://localhost:5678/students/";
+       // var id_val = $("#record_id").val();
+       // var temp = "http://localhost:5678/students/";
       $.ajax({
-        url: temp,
+        url: "http://localhost:5678/students/",
         type: "get",
         success: function(response) {
-          $("#mydiv").text(response);
+            var obj = JSON.stringify(response.students);
+          $("#mydiv").text(obj);
         },
         error: function(xhr) {
           $("#mydiv").text('error: ' + xhr);
