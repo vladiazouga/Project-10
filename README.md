@@ -10,3 +10,7 @@ Each HTML page has its own task:
 - displayStudent.html: display a single student by ID 
 - listStudents.html: list all students records
 
+<div style="width:60px ; height:60px">
+
+<div>
+
