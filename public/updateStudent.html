@@ -3,11 +3,34 @@
 <html>
   <head>
     <title>Update Students</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   </head>
   <body>
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script>
+$(function(){
+  $('a').each(function() {
+    if ($(this).prop('href') == window.location.href) {
+      $(this).addClass('current');
+    }
+  });
+});
+</script>
+<style>
+a.current {
+  background:red;
+  color:white;
+}
+nav a.current {
+  background:lightcyan;
+  color:white;
+}
+</style>
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -23,8 +46,9 @@
         </ol>
       </div>
     </nav>
+
     <h4>This page updates a student's information into the school system</h4>
-  <p>Please enter the student's information</p>
+    <p>Please enter the student's information</p>
     <label for="first_name">First Name:</label>
     <input type="text" id="first_name" name="first_name" /><br /><br />
 
@@ -38,7 +62,8 @@
     <select id="enroll" name="enroll">
       <option value="true">True</option>
       <option value="false">False</option>
-    </select> <br /><br />
+    </select>
+    <br /><br />
 
     <label for="first_name">Record ID:</label>
     <input type="text" id="record_id" name="record_id" /><br /><br />
@@ -72,9 +97,5 @@
         });
       }
     </script>
-    
-    <a href="index.html">Go back to Homepage</a>
-    
-    
   </body>
 </html>
