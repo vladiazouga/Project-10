@@ -1,4 +1,7 @@
-<!-- filename: updateVotes.html -->
+<!--
+    This page updates a student's information into the school system
+
+ -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,6 +15,10 @@
   </head>
   <body>
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <!-- 
+      This script adds a class to the current page's link in the navbar
+      so that it can be styled differently than the other links
+    -->
 <script>
 $(function(){
   $('a').each(function() {
@@ -21,6 +28,9 @@ $(function(){
   });
 });
 </script>
+<!--
+  This style is used to change the color of the current page's link
+-->
 <style>
 a.current {
   background:red;
@@ -31,6 +41,9 @@ nav a.current {
   color:white;
 }
 </style>
+<!--
+  This is the navbar that is used on all pages
+-->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -72,6 +85,9 @@ nav a.current {
     <br />
     <br />
     <div id="mydiv" name="mydiv"></div>
+    <!--
+      This script sends a PUT request to the server to update the student's information
+    -->
     <script>
       function updateVotes() {
         var fname_val = $("#first_name").val();

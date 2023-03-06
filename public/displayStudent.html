@@ -1,14 +1,19 @@
+<!-- This page displays all the students records in the school
+
+-->
 <!DOCTYPE html>
 <html>
-<head>
-<title>Get A Student</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
-  <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+  <head>
+    <title>Get All Students</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 <script>
+  // This script adds a class to the current page link
 $(function(){
   $('a').each(function() {
     if ($(this).prop('href') == window.location.href) {
@@ -17,8 +22,9 @@ $(function(){
   });
 });
 </script>
-<style>
-a.current {
+  
+    <style>
+      a.current {
   background:red;
   color:white;
 }
@@ -26,42 +32,101 @@ nav a.current {
   background:lightcyan;
   color:white;
 }
-</style>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">Student Management System</a>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #236eb9;
+        border: 1px solid;
+      }
+      th {
+        background-color: #d42bc3;
+        color: rgb(189, 178, 27);
+      }
+      tr:nth-child(even) {background-color: #f2f2f2;}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Student Management System</a>
+        </div>
+        <ol class="nav navbar-nav">
+          <li><a href="./addStudent.html">Add Student</a></li>
+          <li><a href="./deleteStudent.html">Delete Student</a></li>
+          <li><a href="./displayStudent.html">Display Student By ID</a></li>
+          <li><a href="./updateStudent.html">Update Student Record</a></li>
+          <li><a href="./listStudents.html">Get All Student Records</a></li>
+          <li><a href="./index.html">Home Page</a></li>
+        </ol>
       </div>
-      <ol class="nav navbar-nav">
-        <li><a href="./addStudent.html">Add Student</a></li>
-        <li><a href="./deleteStudent.html">Delete Student</a></li>
-        <li><a href="./displayStudent.html">Display Student By ID</a></li>
-        <li><a href="./updateStudent.html">Update Student Record</a></li>
-        <li><a href="./listStudents.html">Get All Student Records</a></li>
-        <li><a href="./index.html">Home Page</a></li>
-      </ol>
-    </div>
-  </nav>
-  <h4>This page displays a students information </h4>
-  <p>Please enter the student ID to view their record</p>
-  <label for="vote"> Get a Student by ID:</label>
-  <input type="text" id="record_id" name="record_id"><br><br>
+    </nav>
+    <h4>This page displays a students information </h4>
+    <p>Please enter the student ID to view their record</p>
+    <div class="container">
+      <a href="index.html">Go back to Homepage</a>
+      <br>
+    </br>
+
+  <label for="id_students">Record ID:</label>
+  <input type="text" id="id_students" name="id_students"><br><br>
 
   <button onclick="sendGetVote()">Submit</button>
   <br>
-</br>
-
-  <div id="mydiv" name="mydiv"></div>
+  <br>
+  <table id="studentTable">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>ID</th>
+        <th>GPA</th>
+        <th>Enrolled</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  </div>
   <script>
 
     function sendGetVote() {
-        var id_val = $("#record_id").val();
-        var temp = "http://localhost:5678/students/"+id_val;
+      var id_val = $("#id_students").val();
+      var temp="http://localhost:5678/students/"+id_val
       $.ajax({
         url: temp,
         type: "get",
+        dataType: "json",
         success: function(response) {
-          $("#mydiv").text(response);
+          var cont = response
+          console.log(typeof cont)
+          var obj=JSON.stringify(response);
+          var temp = response
+          console.log(obj)
+          const table = document.getElementById("studentTable");
+          console.log(temp)
+          const row = table.insertRow();
+          // Add cells to the row
+          const firstNameCell = row.insertCell();
+          firstNameCell.textContent = temp.first_name;
+
+          const lastNameCell = row.insertCell();
+          lastNameCell.textContent = temp.last_name;
+
+          const idCell = row.insertCell();
+          idCell.innerHTML = temp.record_id;
+          
+
+          const gpaCell = row.insertCell();
+          gpaCell.textContent = temp.gpa;
+
+          const enrolledCell = row.insertCell();
+          enrolledCell.textContent = temp.enrolled;
         },
         error: function(xhr) {
           $("#mydiv").text('error: ' + xhr);
@@ -70,6 +135,6 @@ nav a.current {
     }
     
   </script>
-<a href="index.html">Go back to Homepage</a>
+
 </body>
 </html>

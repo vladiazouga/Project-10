@@ -1,3 +1,6 @@
+<!-- This page displays all the students records in the school
+
+-->
 <!DOCTYPE html>
 <html>
   <head>
@@ -10,6 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 <script>
+  // This script adds a class to the current page link
 $(function(){
   $('a').each(function() {
     if ($(this).prop('href') == window.location.href) {
@@ -18,7 +22,9 @@ $(function(){
   });
 });
 </script>
-
+  <!--
+  This style is used to change the color of the current page's link
+-->
     <style>
       a.current {
   background:red;
@@ -47,6 +53,9 @@ nav a.current {
     </style>
   </head>
   <body>
+    <!--
+  This is the navbar that is used on all pages
+-->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -64,8 +73,10 @@ nav a.current {
     </nav>
     <div class="container">
       <h4>This page displays all the students records in the school </h4>
+      <a href="index.html">Go back to Homepage</a>
       
-
+      <!-- create a table
+    -->
       <table id="studentTable">
         <thead>
           <tr>
@@ -78,7 +89,9 @@ nav a.current {
         </thead>
       </table>
     </div>
-
+    <!--
+      This script sends a GET request to the server to get all the students records
+    -->
     <script>
       sendGetAllVote();
       function sendGetAllVote() {
@@ -87,10 +100,11 @@ nav a.current {
           url: "http://localhost:5678/students",
           type: "get",
           success: function (response) {
+            //This is the response from the server
             var obj = JSON.stringify(response.students);
             var temp = response.students;
             console.log(temp.length);
-
+            // Get the table element and add rows to it with the JSON data
             const table = document.getElementById("studentTable");
 
             // Loop through the JSON data and add rows to the table
@@ -116,6 +130,7 @@ nav a.current {
 
             
             console.log(response.students);
+            //This will display the response on the page
             $("#mydiv").text(obj);
             console.log(response.students);
           },
