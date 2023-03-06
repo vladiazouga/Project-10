@@ -10,3 +10,7 @@ Each HTML page has its own task:
 - displayStudent.html: display a single student by ID 
 - listStudents.html: list all students records
 
+
+<img src="https://user-images.githubusercontent.com/113088206/222993620-70e6eb72-d5ac-46cd-9e8a-d74a166c6d01.png" width="500" height="400" />
+
+
