@@ -1,0 +1,79 @@
+<!--
+    This page updates a student's information into the school system
+
+ -->
+ <!DOCTYPE html>
+ <html>
+   <head>
+     <title>Update Students</title>
+     <link
+       rel="stylesheet"
+       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+     />
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <%- include('partials/navbar')  %>
+    </head>
+   <body>
+     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+     <!-- 
+       This script adds a class to the current page's link in the navbar
+       so that it can be styled differently than the other links
+     -->
+ 
+     <h4>This page updates a student's information into the school system</h4>
+     <p>Please enter the student's information</p>
+     <label for="first_name">First Name:</label>
+     <input type="text" id="first_name" name="first_name" /><br /><br />
+ 
+     <label for="last_name">Last Name:</label>
+     <input type="text" id="last_name" name="last_name" /><br /><br />
+ 
+     <label for="last_name">GPA:</label>
+     <input type="text" id="gpa" name="gpa" /><br /><br />
+ 
+     <label for="last_name">Enrollment:</label>
+     <select id="enroll" name="enroll">
+       <option value="true">True</option>
+       <option value="false">False</option>
+     </select>
+     <br /><br />
+ 
+     <label for="first_name">Record ID:</label>
+     <input type="text" id="record_id" name="record_id" /><br /><br />
+ 
+     <button onclick="updateVotes()">Update Students</button>
+     <br />
+     <br />
+     <div id="mydiv" name="mydiv"></div>
+     <!--
+       This script sends a PUT request to the server to update the student's information
+     -->
+     <script>
+       function updateVotes() {
+         var fname_val = $("#first_name").val();
+         var lname_val = $("#last_name").val();
+         var gpa_val = $("#gpa").val();
+         var enroll_val = $("#enroll").val();
+         var id_val = $("#record_id").val();
+         $.ajax({
+           url: "http://localhost:5678/students/" + id_val,
+           type: "put",
+           data: {
+             first_name: fname_val,
+             last_name: lname_val,
+             gpa: gpa_val,
+             enrolled: enroll_val,
+           },
+           success: function (response) {
+             $("#mydiv").text("Successfully updated the the student records");
+           },
+           error: function (xhr) {
+             $("#mydiv").text("error: " + xhr);
+           },
+         });
+       }
+     </script>
+   </body>
+ </html>
+ 

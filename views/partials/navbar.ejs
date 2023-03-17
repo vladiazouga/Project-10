@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        // This script adds a class to the current page's link in the navbar
+      $(function(){
+        $('a').each(function() {
+          if ($(this).prop('href') == window.location.href) {
+            $(this).addClass('current');
+          }
+        });
+      });
+      </script>
+    <style>
+        a.current {
+          background:red;
+          color:white;
+        }
+        nav a.current {
+          background:lightcyan;
+          color:white;
+        }
+        </style>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Student Management System</a>
+          </div>
+          <ol class="nav navbar-nav">
+            <li><a href="/addStudent">Add Student</a></li>
+            <li><a href="/deleteStudent">Delete Student</a></li>
+            <li><a href="/displayStudent">Display Student By ID</a></li>
+            <li><a href="/updateStudent">Update Student Record</a></li>
+            <li><a href="/listStudents">Get All Student Records</a></li>
+            <li><a href="/">Home Page</a></li>
+          </ol>
+        </div>
+      </nav>
+</head>    

@@ -1,0 +1,49 @@
+<!--
+  This page deletes a student by their ID
+ -->
+ <!DOCTYPE html>
+ <html>
+ <head>
+ <title>Delete Student</title>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <%- include('partials/navbar')  %>
+</head>
+ <body>
+   <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+ 
+   <h4>This page deletes a student by their ID</h4>
+   <p>Please enter the student ID you want to delete</p>
+   <label>Record ID:</label>
+ <input type="text" id="record_id" name="record_id"><br><br>
+ <button onclick="deleteStudent()">Delete Students</button>
+   <br>
+ </br>
+ <div id="mydiv" name="mydiv"></div>
+   <script>
+     
+     
+     // This function deletes a student by their ID using the deleteStudent API
+ 
+     function deleteStudent() {
+         var id_val = $("#record_id").val();
+       $.ajax({
+         url: "http://localhost:5678/students/" + id_val,
+         type: "delete",
+         data: { 
+           record_id: id_val
+         },
+         success: function(response) {
+           $("#mydiv").text("Successfully deleted student");
+         },
+         error: function(xhr) {
+           $("#mydiv").text('error: ' + xhr);
+         }
+       });
+     }
+     
+   </script>
+ <a href="index.html">Go back to Homepage</a>
+ </body>
+ </html>

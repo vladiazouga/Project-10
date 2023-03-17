@@ -6,50 +6,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <%- include('partials/navbar') %>
   </head>
   <body>
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-<script>
-  // This script adds a class to the current page's link in the navbar
-$(function(){
-  $('a').each(function() {
-    if ($(this).prop('href') == window.location.href) {
-      $(this).addClass('current');
-    }
-  });
-});
-</script>
-<!--
-  This style is used to change the color of the current page's link
--->
-<style>
-a.current {
-  background:red;
-  color:white;
-}
-nav a.current {
-  background:lightcyan;
-  color:white;
-}
-</style>
-<!--
-  This is the navbar that is used on all pages
--->
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">Student Management System</a>
-        </div>
-        <ol class="nav navbar-nav">
-          <li><a href="./addStudent.html">Add Student</a></li>
-          <li><a href="./deleteStudent.html">Delete Student</a></li>
-          <li><a href="./displayStudent.html">Display Student By ID</a></li>
-          <li><a href="./updateStudent.html">Update Student Record</a></li>
-          <li><a href="./listStudents.html">Get All Student Records</a></li>
-          <li><a href="./index.html">Home Page</a></li>
-        </ol>
-      </div>
-    </nav>
+
+  
     <h4>This page adds a student to the school system</h4>
   <p>Please enter the student information</p>
     <label for="first_name">First Name:</label>
