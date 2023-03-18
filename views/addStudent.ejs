@@ -26,8 +26,11 @@
     <label for="last_name">Enrollment:</label>
     <select id="enroll" name="enroll">
       <option value="true">True</option>
-      <option value="false">False</option>
-    </select>
+      <option value="false">False</option> 
+    </select> <br /><br /> 
+
+    <label for="last_name">ID:</label>
+    <input type="text" id="ID" name="ID" /><br /><br />
 
     <button onclick="sendVote()">Submit</button>
     <br />
@@ -40,6 +43,7 @@
         var lname_val = $("#last_name").val();
         var gpa_val = $("#gpa").val();
         var enroll_val = $("#enroll").val();
+        var id_val = $("#ID").val();
         
         $.ajax({
           url: "http://localhost:5678/students",
@@ -49,9 +53,10 @@
             last_name: lname_val,
             gpa: gpa_val,
             enrolled: enroll_val,
+            id: id_val,
           },
           success: function (response) {
-            $("#mydiv").text("Successfully executed");
+            $("#mydiv").text(response);
           },
           error: function (xhr) {
             $("#mydiv").text("error: " + xhr);
@@ -59,6 +64,6 @@
         });
       }
     </script>
-    <a href="index.html">Go back to Homepage</a>
+    <a href="/">Go back to Homepage</a>
   </body>
 </html>

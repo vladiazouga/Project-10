@@ -2,8 +2,6 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser');
-const fs = require('fs');
-const glob = require("glob")
 const mongoose = require('mongoose');
 
 
@@ -22,7 +20,7 @@ const db = mongoose.connection;
 
 //Creates schema to insert to the database, sets schema to a constant to be used in api calls.
 const info = new mongoose.Schema({
-  record_id: {
+  _id: {
     required: true,
     type: Number
   },
@@ -45,50 +43,73 @@ const info = new mongoose.Schema({
 })
 const Model = mongoose.model('Data', info)
 
-app.post('/students', function (req, res) {
+app.post('/students', async function (req, res) {
   var record_id = new Date().getTime();
   const data = new Model({
 
-    record_id: record_id,
+    _id: req.body.id,
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     gpa: req.body.gpa,
     enrolled: req.body.enrolled
+
   })
-  const dataToSave =  data.save();
+  //Should check for duplicates before saving to the database.
+   const existingStudent = await Model.findOne({ first_name: req.body.first_name, last_name: req.body.last_name,});
+   console.log(existingStudent)
+   if (existingStudent) {
+    return res.status(200).send("Student already exists");
+   };
+  const dataToSave = await data.save();
   return res.status(200).send("Success");
+
+  
+
 });
 
-  //Waits for the database to find the student, if it does not exist, it will save the data to the database.
-  //var x =  Model.find({ record_id:record_id, first_name: req.body.first_name, last_name: req.body.last_name }).count()
-  /*if (x != 0) {
-    console.log("Student Already Exists")
-    res.status(400).send("Error, student exists!");
-  }
-  else {
-    console.log(data)
-    try {
-      console.log("Worked")
-      //Saves the data to the database
-      const dataToSave =  data.save();
-      res.status(200).send("Success");
-    }
-    catch (error) {
-      res.status(400).send("Error");
-    }
-  }
-});*/
 
 
-app.get('/students/:record_id', function(req, res){{
-  console.log(req.params.record_id);
+
+app.get('/students/:record_id', async function (req, res) {
   {
-    
-  }
-    const data = Model.findOne({record_id: req.params.record_id});
+    console.log(req.params.record_id);
+    //This will find the student by their id in the database and return the data.
+    const data = await Model.findOne({ _id: req.params.record_id });
     res.status(200).send(data);
-  
-}});
+
+  }
+});
+
+app.get('/students', async function (req, res) {
+  {
+    //This will find all the students in the database and return the data.
+    //It will wait for the data to be returned before sending the data.
+    const data = await Model.find();
+    res.status(200).send(data);
+
+  }
+});
+
+app.delete('/students/:record_id', async function (req, res) {
+  {
+    //This will find the student by their id in the database and delete the data.
+    const data = await Model.deleteOne({ _id: req.params.record_id });
+    res.status(200).send(data);
+
+  }
+});
+
+app.put('/students/:record_id', async function (req, res) {
+  {
+    //This will find the student by their id in the database and update the data.
+    const data = await Model.updateOne({ _id: req.params.record_id }, { first_name: req.body.first_name, last_name: req.body.last_name, gpa: req.body.gpa, enrolled: req.body.enrolled });
+    res.status(200).send(data);
+    console.log(data)
+
+  }
+});
+
+
 
 
 

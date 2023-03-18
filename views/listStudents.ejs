@@ -64,8 +64,8 @@
           type: "get",
           success: function (response) {
             //This is the response from the server
-            var obj = JSON.stringify(response.students);
-            var temp = response.students;
+            var obj = JSON.stringify(response);
+            var temp = response;
             console.log(temp.length);
             // Get the table element and add rows to it with the JSON data
             const table = document.getElementById("studentTable");
