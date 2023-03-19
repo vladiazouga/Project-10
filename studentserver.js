@@ -55,15 +55,15 @@ app.post('/students', async function (req, res) {
 
   })
   //Should check for duplicates before saving to the database.
-   const existingStudent = await Model.findOne({ first_name: req.body.first_name, last_name: req.body.last_name,});
-   console.log(existingStudent)
-   if (existingStudent) {
+  const existingStudent = await Model.findOne({ first_name: req.body.first_name, last_name: req.body.last_name, });
+  console.log(existingStudent)
+  if (existingStudent) {
     return res.status(200).send("Student already exists");
-   };
+  };
   const dataToSave = await data.save();
   return res.status(200).send("Success");
 
-  
+
 
 });
 
@@ -84,8 +84,23 @@ app.get('/students', async function (req, res) {
   {
     //This will find all the students in the database and return the data.
     //It will wait for the data to be returned before sending the data.
-    const data = await Model.find();
-    res.status(200).send(data);
+    let { fname, lname } = req.query
+    console.log(fname)
+    console.log(lname)
+
+    if (fname && lname) {
+      var match = new RegExp("^" + fname);
+      var match2 = new RegExp("^" + lname);
+      let search = await Model.find({ first_name: match, last_name: match2 });
+      if (search.length > 0) {
+        res.status(200).send(search);
+      }
+    }
+    else {
+      const data = await Model.find();
+      res.status(200).send(data);
+    }
+
 
   }
 });
