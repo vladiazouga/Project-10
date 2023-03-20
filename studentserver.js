@@ -4,21 +4,20 @@ const app = express()
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-
-
 //sets the url
 const mongoURI = "mongodb+srv://vzouga2021:$$Smileyvee2468$$@hw7.evep4ed.mongodb.net/?retryWrites=true&w=majority";
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static('./public'));
+//Sets the view engine to ejs.
 app.set('view engine', 'ejs');
 
-//Connects to the database, informs the programmer if connection successful.
+//Connects to the database, using the url.
 mongoose.connect(mongoURI);
 const db = mongoose.connection;
 
-//Creates schema to insert to the database, sets schema to a constant to be used in api calls.
+//Creates schema to insert to the database, and sets the data types.
 const info = new mongoose.Schema({
   _id: {
     required: true,
@@ -41,8 +40,11 @@ const info = new mongoose.Schema({
     type: String
   }
 })
+
+//Creates a model to be used in the api calls.
 const Model = mongoose.model('Data', info)
 
+//This post method will add a student to the database.
 app.post('/students', async function (req, res) {
   var record_id = new Date().getTime();
   const data = new Model({
@@ -69,7 +71,7 @@ app.post('/students', async function (req, res) {
 
 
 
-
+//This get method will find a student by their id in the database and return the data.
 app.get('/students/:record_id', async function (req, res) {
   {
     console.log(req.params.record_id);
@@ -80,14 +82,15 @@ app.get('/students/:record_id', async function (req, res) {
   }
 });
 
+//This get method will find all the students in the database and return the data.
 app.get('/students', async function (req, res) {
   {
-    //This will find all the students in the database and return the data.
-    //It will wait for the data to be returned before sending the data.
+    
     let { fname, lname } = req.query
     console.log(fname)
     console.log(lname)
-
+    //This will find the student's first name and last name in the database using what the user typed in the search bar.
+    //and return the data.
     if (fname && lname) {
       var match = new RegExp("^" + fname);
       var match2 = new RegExp("^" + lname);
@@ -105,6 +108,7 @@ app.get('/students', async function (req, res) {
   }
 });
 
+//This delete method will find a student by their id in the database and delete the data.
 app.delete('/students/:record_id', async function (req, res) {
   {
     //This will find the student by their id in the database and delete the data.
@@ -114,6 +118,7 @@ app.delete('/students/:record_id', async function (req, res) {
   }
 });
 
+//This put method will find a student by their id in the database and update the data.
 app.put('/students/:record_id', async function (req, res) {
   {
     //This will find the student by their id in the database and update the data.
@@ -124,43 +129,30 @@ app.put('/students/:record_id', async function (req, res) {
   }
 });
 
-
-
-
-
-
-
+//This http request will render the addStudent page. 
 app.get('/addStudent', function (req, res) {
   res.render('addStudent');
-
-}); //end post method
-
-
+});
+//This http request will render the displayStudent page.
 app.get('/displayStudent', function (req, res) {
   res.render('displayStudent');
 });
-
+//This http request will render the updateStudent page.
 app.get('/updateStudent', function (req, res) {
   res.render('updateStudent');
 });
-
-
+//This http request will render the deleteStudent page.
 app.get('/deleteStudent', function (req, res) {
-
   res.render('deleteStudent');
-}); //end put method
-
+});
+//This http request will render the listStudents page.
 app.get('/listStudents', function (req, res) {
   res.render('listStudents');
 });
-//end delete method
-
+//This http request will render the index page.
 app.get('/', function (req, res) {
   res.render('index');
 });
-
-
-
 
 
 app.listen(5678); //start the server
