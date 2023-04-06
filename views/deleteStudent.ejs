@@ -29,7 +29,7 @@
      function deleteStudent() {
          var id_val = $("#record_id").val();
        $.ajax({
-         url: "http://localhost:5678/students/" + id_val,
+         url: "http://18.119.159.28:5678/students/" + id_val,
          type: "delete",
          data: { 
            record_id: id_val
