@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 //sets the url
 const mongoURI = "mongodb+srv://vzouga2021:$$Smileyvee2468$$@hw7.evep4ed.mongodb.net/?retryWrites=true&w=majority";
